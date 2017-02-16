@@ -4,11 +4,6 @@ import expert.scalamorphing.metasphere.layout.metasphere.MetaSphere
 import expert.scalamorphing.metasphere.tool.Parser
 import expert.scalamorphing.metasphere.tool.Parser.Node
 import org.scalajs.dom.{ Event, KeyboardEvent, document }
-
-import scalatags.Text.svgAttrs._
-import scalatags.Text.svgTags._
-import scalatags.Text.svgTags.ArrayNode
-import scalatags.Text.{ Frag, svgAttrs }
 import org.scalajs.dom.html.TextArea
 
 case class Input(id: String) {

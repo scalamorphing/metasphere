@@ -7,10 +7,10 @@ import org.scalajs.dom.{ Event, KeyboardEvent, document }
 import org.scalajs.dom.html.TextArea
 
 case class Input(id: String) {
-  implicit val delimiters = Set[Char](" \n\r\t": _*)
+  private implicit val delimiters = Set[Char](" \n\r\t": _*)
   import expert.scalamorphing.slowparser.api._
 
-  val input = document.createElement("textarea")
+  private val input = document.createElement("textarea")
   input.setAttribute("style", "width: 400px; height: 400px; background-color: lightyellow; float: left;")
   document.getElementById(id).appendChild(input)
 
@@ -59,9 +59,9 @@ case class Input(id: String) {
       case None =>
         println("parsing failed")
     }
-  }, false)
+  }, useCapture = false)
 
-  val submit = document.createElement("input")
+  private val submit = document.createElement("input")
   submit.setAttribute("style", "width: 400px; height: 40px; backround-color: blue; color: red; float: left;")
   submit.setAttribute("type", "button")
   submit.setAttribute("value", "Synchronize")

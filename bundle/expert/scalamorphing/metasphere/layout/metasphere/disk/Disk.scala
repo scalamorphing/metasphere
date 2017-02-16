@@ -1,6 +1,6 @@
 package expert.scalamorphing.metasphere.layout.metasphere.disk
 
-import expert.scalamorphing.metasphere.layout.metasphere.{Level, PolarPoint, Radiant}
+import expert.scalamorphing.metasphere.layout.metasphere.{ Level, PolarPoint, Radiant }
 import expert.scalamorphing.metasphere.layout.metasphere.sector.Sector
 import expert.scalamorphing.metasphere.tool.Parser.Node
 
@@ -29,7 +29,6 @@ case class Disk(center: Sector) {
       } else {
         Radiant.Center
       }
-
 
       var delta = {
         parentRadiant.to.angle - parentRadiant.from.angle
@@ -81,7 +80,7 @@ case class Disk(center: Sector) {
 object Disk {
   def apply(node: Node): Disk = {
     new Disk(
-        makeIndex(null, node, 0, 0)
+      makeIndex(null, node, 0, 0)
     )
   }
 
@@ -96,9 +95,10 @@ object Disk {
     }
 
     childrenIndices.foreach {
-      child => {
-        sector.insert(child)
-      }
+      child =>
+        {
+          sector.insert(child)
+        }
     }
     sector
   }

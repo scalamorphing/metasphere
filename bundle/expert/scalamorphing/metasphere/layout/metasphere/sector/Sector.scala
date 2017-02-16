@@ -9,14 +9,13 @@ import scala.collection.mutable
 
 case class PointPair(polar: PolarPoint, xy: CartesianPoint)
 
-
 class Sector(var name: String, val number: Int,
-             rawChildren: TreeMap[Int, Sector] = TreeMap.empty)
-            (implicit var parent: Sector = Sector.Root,
-             var implicitLevel: Level = Level(-1),
-             var radiant: Radiant = Radiant.Center,
-             val path: Path = Path.Root(null))
-  extends Tree[Int, Sector] {
+  rawChildren: TreeMap[Int, Sector] = TreeMap.empty)(implicit
+  var parent: Sector = Sector.Root,
+  var implicitLevel: Level = Level(-1),
+  var radiant: Radiant = Radiant.Center,
+  val path: Path = Path.Root(null))
+    extends Tree[Int, Sector] {
 
   import Sector._
 
@@ -112,7 +111,7 @@ class Sector(var name: String, val number: Int,
     s"""
        |Sector(
        |${"  " * indent}[$number, $level, parent: ${if (parent != null) parent.level else null}]
-       |${this.children.map{ case (_, child) => child.info(indent + 1)} mkString " " })
+       |${this.children.map { case (_, child) => child.info(indent + 1) } mkString " "})
      """.stripMargin
   }
 
@@ -140,7 +139,7 @@ class Sector(var name: String, val number: Int,
     this
   }
 
-  def insert(newChild: Sector): Sector  = {
+  def insert(newChild: Sector): Sector = {
     val childLevel = Level(this.level.index + 1)
     this.children = this.children.updated(newChild.number, newChild.link(this, childLevel))
     this
@@ -155,7 +154,7 @@ class Sector(var name: String, val number: Int,
       for {
         current <- queue if queue.nonEmpty
       } yield {
-        queue.enqueue(current.children.values.toSeq :_*)
+        queue.enqueue(current.children.values.toSeq: _*)
 
         current
       }
@@ -215,10 +214,10 @@ object Sector {
     }
   }
 
-  def apply(name: String, number: Int)
-           (implicit parent: Sector = Sector.Root,
-            level: Level = Level(-1),
-            radiant: Radiant = Radiant.Center): Sector = {
+  def apply(name: String, number: Int)(implicit
+    parent: Sector = Sector.Root,
+    level: Level = Level(-1),
+    radiant: Radiant = Radiant.Center): Sector = {
     new Sector(name, number)(parent, level, radiant)
   }
 
@@ -228,18 +227,19 @@ object Sector {
     val rings = Array[Ring]()
     val maxLevel = allSectors.map(_.level.index).max
     (0 to maxLevel).map {
-      level => Ring(
-        level,
-        allSectors.filter {
-          sector => sector.level.index == level
-        }
-      )
+      level =>
+        Ring(
+          level,
+          allSectors.filter {
+            sector => sector.level.index == level
+          }
+        )
     } toArray
   }
 
   def sortByRing(sector: Array[Sector]): Array[Sector] = {
 
-    val queue = mutable.PriorityQueue[Sector](sector :_*)(ordering)
+    val queue = mutable.PriorityQueue[Sector](sector: _*)(ordering)
 
     val sorted: SortedSector = {
       for {

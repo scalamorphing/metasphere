@@ -3,16 +3,16 @@ package expert.scalamorphing.metasphere.widget
 import expert.scalamorphing.metasphere.layout.metasphere.MetaSphere
 import expert.scalamorphing.metasphere.tool.Parser
 import expert.scalamorphing.metasphere.tool.Parser.Node
-import org.scalajs.dom.{Event, KeyboardEvent, document}
+import org.scalajs.dom.{ Event, KeyboardEvent, document }
 
 import scalatags.Text.svgAttrs._
 import scalatags.Text.svgTags._
 import scalatags.Text.svgTags.ArrayNode
-import scalatags.Text.{Frag, svgAttrs}
+import scalatags.Text.{ Frag, svgAttrs }
 import org.scalajs.dom.html.TextArea
 
 case class Input(id: String) {
-  implicit val delimiters = Set[Char](" \n\r\t" :_*)
+  implicit val delimiters = Set[Char](" \n\r\t": _*)
   import expert.scalamorphing.slowparser.api._
 
   val input = document.createElement("textarea")

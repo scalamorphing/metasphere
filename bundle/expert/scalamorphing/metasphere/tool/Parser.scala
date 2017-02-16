@@ -1,7 +1,7 @@
 package expert.scalamorphing.metasphere.tool
 
 object Parser {
-  implicit val delimiters = Set[Char](" \n\r\t" :_*)
+  implicit val delimiters = Set[Char](" \n\r\t": _*)
   import expert.scalamorphing.slowparser.api._
 
   val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUWXYZ"

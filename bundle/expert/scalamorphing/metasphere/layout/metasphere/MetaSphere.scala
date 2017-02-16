@@ -19,13 +19,11 @@ import scalatags.Text.svgAttrs._
 import scalatags.Text.svgTags
 import scalatags.Text.svgTags._
 import scalatags.Text.svgTags.ArrayNode
-import scalatags.Text.{Frag, svgAttrs}
-import org.scalajs.dom.{Event, MouseEvent, document}
+import scalatags.Text.{ Frag, svgAttrs }
+import org.scalajs.dom.{ Event, MouseEvent, document }
 import org.w3c.dom.html.HTMLDOMImplementation
 
-
 case class Level(index: Int)
-
 
 case class Point(x: Double, y: Double)
 
@@ -67,18 +65,18 @@ object Radiant {
 case class MetaSphere(id: String)(node: Node) {
   document.getElementById(id).innerHTML = {
     svg(
-      svgAttrs.viewBox:="0 0 100 100",
-      svgAttrs.width:="800",
-      svgAttrs.height:="800",
-      svgAttrs.id:="svg"
-    ) (
-      {
-        val disk = Disk(node)
-        val rings = disk.rings.reverse
-        val radiants = disk.radiants.reverse
-        val sectors = disk.sectors
-        ArrayNode(
-          /*rings.map { ring => {
+      svgAttrs.viewBox := "0 0 100 100",
+      svgAttrs.width := "800",
+      svgAttrs.height := "800",
+      svgAttrs.id := "svg"
+    )(
+        {
+          val disk = Disk(node)
+          val rings = disk.rings.reverse
+          val radiants = disk.radiants.reverse
+          val sectors = disk.sectors
+          ArrayNode(
+            /*rings.map { ring => {
             println(ring.level)
             circle(
               svgAttrs.r := (45.0 * (ring.level + 1.0) / rings.length).toString,
@@ -89,62 +87,65 @@ case class MetaSphere(id: String)(node: Node) {
               svgAttrs.strokeWidth := "1"
             )
             }
-          } ++ */sectors.map {
-            sector => {
-              val points = sector.textPoints(CartesianPoint(50.0, 50.0), 45.0, rings.length)
-              val sectorString = Array(
-                s"M ${points(0).xy.toString}",
-                s"A ${points(0).polar.radius} ${points(0).polar.radius} 0 0 1 ${points(1).xy.toString}",
-                "z"
-              ).mkString(" ")
+          } ++ */ sectors.map {
+              sector =>
+                {
+                  val points = sector.textPoints(CartesianPoint(50.0, 50.0), 45.0, rings.length)
+                  val sectorString = Array(
+                    s"M ${points(0).xy.toString}",
+                    s"A ${points(0).polar.radius} ${points(0).polar.radius} 0 0 1 ${points(1).xy.toString}",
+                    "z"
+                  ).mkString(" ")
 
-              svgTags.defs(
-                svgTags.path(
-                  svgAttrs.id := s"sector-${sector.getId}",
-                  svgAttrs.d := sectorString,
-                  svgAttrs.stroke := sector.anticolor(rings.length),
-                  svgAttrs.strokeWidth := "0.4",
-                  svgAttrs.fill := sector.color(rings.length)
-                )()
-              )
-            }
-          } ++ sectors.flatMap {
-            sector => {
-              val points = sector.points(CartesianPoint(50.0, 50.0), 45.0)
-              val sectorString = Array(
-                s"M ${points(0).xy.toString}",
-                s"A ${points(0).polar.radius} ${points(0).polar.radius} 0 0 1 ${points(1).xy.toString}",
-                s"L ${points(1).xy.toString} ${points(2).xy.toString}",
-                s"A ${points(2).polar.radius} ${points(2).polar.radius} 0 0 0 ${points(3).xy.toString}",
-                s"L ${points(3).xy.toString} ${points(0).xy.toString}",
-                "z"
-              ).mkString(" ")
-              Seq(svgTags.path(
-                svgAttrs.d := sectorString,
-                svgAttrs.stroke := sector.anticolor(rings.length),
-                svgAttrs.strokeWidth := "0.4",
-                svgAttrs.fill := sector.color(rings.length),
-                svgAttrs.id := s"area-${sector.getId}",
-                svgAttrs.`class` := "sector-area"
-              ))
-            }
-          } ++ sectors.map {
-            sector => {
-              val points = sector.points(CartesianPoint(50.0, 50.0), 45.0)
-              svgTags.text(
-                svgAttrs.fontSize := s"${(points(2).polar.radius - points(0).polar.radius) / 3.0}",
-                svgAttrs.fontFamily := "sans-serif",
-                svgAttrs.fill := sector.anticolor(rings.length),
-                svgAttrs.offset := "5%"
-              )(
-                svgTags.textPath(
-                  svgAttrs.xLinkHref := s"#sector-${sector.getId}"
-                )(
-                  sector.name
-                )
-              )
-            }
-          }/*++ radiants.map {
+                  svgTags.defs(
+                    svgTags.path(
+                      svgAttrs.id := s"sector-${sector.getId}",
+                      svgAttrs.d := sectorString,
+                      svgAttrs.stroke := sector.anticolor(rings.length),
+                      svgAttrs.strokeWidth := "0.4",
+                      svgAttrs.fill := sector.color(rings.length)
+                    )()
+                  )
+                }
+            } ++ sectors.flatMap {
+              sector =>
+                {
+                  val points = sector.points(CartesianPoint(50.0, 50.0), 45.0)
+                  val sectorString = Array(
+                    s"M ${points(0).xy.toString}",
+                    s"A ${points(0).polar.radius} ${points(0).polar.radius} 0 0 1 ${points(1).xy.toString}",
+                    s"L ${points(1).xy.toString} ${points(2).xy.toString}",
+                    s"A ${points(2).polar.radius} ${points(2).polar.radius} 0 0 0 ${points(3).xy.toString}",
+                    s"L ${points(3).xy.toString} ${points(0).xy.toString}",
+                    "z"
+                  ).mkString(" ")
+                  Seq(svgTags.path(
+                    svgAttrs.d := sectorString,
+                    svgAttrs.stroke := sector.anticolor(rings.length),
+                    svgAttrs.strokeWidth := "0.4",
+                    svgAttrs.fill := sector.color(rings.length),
+                    svgAttrs.id := s"area-${sector.getId}",
+                    svgAttrs.`class` := "sector-area"
+                  ))
+                }
+            } ++ sectors.map {
+              sector =>
+                {
+                  val points = sector.points(CartesianPoint(50.0, 50.0), 45.0)
+                  svgTags.text(
+                    svgAttrs.fontSize := s"${(points(2).polar.radius - points(0).polar.radius) / 3.0}",
+                    svgAttrs.fontFamily := "sans-serif",
+                    svgAttrs.fill := sector.anticolor(rings.length),
+                    svgAttrs.offset := "5%"
+                  )(
+                      svgTags.textPath(
+                        svgAttrs.xLinkHref := s"#sector-${sector.getId}"
+                      )(
+                          sector.name
+                        )
+                    )
+                }
+            } /*++ radiants.map {
             radiant => {
               line(
                 svgAttrs.x1 := (50.0 + 45 * radiant.from.radius * Math.cos(radiant.from.angle)).toString,
@@ -156,9 +157,9 @@ case class MetaSphere(id: String)(node: Node) {
               )
             }
           }*/
-        )
-      }
-    ).render
+          )
+        }
+      ).render
   }
   val sectorAreas = document.getElementsByClassName("sector-area")
   val length = sectorAreas.length

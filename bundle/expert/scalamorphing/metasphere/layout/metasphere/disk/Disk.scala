@@ -4,8 +4,6 @@ import expert.scalamorphing.metasphere.layout.metasphere.{ Level, PolarPoint, Ra
 import expert.scalamorphing.metasphere.layout.metasphere.sector.Sector
 import expert.scalamorphing.metasphere.tool.Parser.Node
 
-import scala.collection.immutable.TreeMap
-
 case class Disk(center: Sector) {
   val sectors = this.center.flatten
   val paths = this.center.sort

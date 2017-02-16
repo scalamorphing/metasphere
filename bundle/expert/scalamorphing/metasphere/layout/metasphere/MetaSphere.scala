@@ -1,27 +1,18 @@
 package expert.scalamorphing.metasphere.layout.metasphere
 
-import javafx.scene.shape.SVGPath
-
-import scala.collection.immutable.TreeMap
-import MetaSphere._
 import expert.scalamorphing.metasphere.layout.metasphere.disk.Disk
 import expert.scalamorphing.metasphere.layout.metasphere.sector.Sector
 import expert.scalamorphing.metasphere.tool.Parser.Node
 
-import scala.collection.mutable
 import scala.languageFeature.postfixOps
-import monix.execution.Scheduler.Implicits.global
-import monix.reactive._
 import org.scalajs.dom.raw.SVGPathElement
 
 import scalatags.Text.all._
-import scalatags.Text.svgAttrs._
 import scalatags.Text.svgTags
 import scalatags.Text.svgTags._
 import scalatags.Text.svgTags.ArrayNode
-import scalatags.Text.{ Frag, svgAttrs }
-import org.scalajs.dom.{ Event, MouseEvent, document }
-import org.w3c.dom.html.HTMLDOMImplementation
+import scalatags.Text.svgAttrs
+import org.scalajs.dom.{ MouseEvent, document }
 
 case class Level(index: Int)
 
@@ -76,18 +67,7 @@ case class MetaSphere(id: String)(node: Node) {
           val radiants = disk.radiants.reverse
           val sectors = disk.sectors
           ArrayNode(
-            /*rings.map { ring => {
-            println(ring.level)
-            circle(
-              svgAttrs.r := (45.0 * (ring.level + 1.0) / rings.length).toString,
-              svgAttrs.cx := 50.0.toString,
-              svgAttrs.cy := 50.0.toString,
-              svgAttrs.fill := ring.color(rings.length),
-              svgAttrs.stroke := "rgb(0, 0, 0)",
-              svgAttrs.strokeWidth := "1"
-            )
-            }
-          } ++ */ sectors.map {
+            sectors.map {
               sector =>
                 {
                   val points = sector.textPoints(CartesianPoint(50.0, 50.0), 45.0, rings.length)
@@ -145,18 +125,7 @@ case class MetaSphere(id: String)(node: Node) {
                         )
                     )
                 }
-            } /*++ radiants.map {
-            radiant => {
-              line(
-                svgAttrs.x1 := (50.0 + 45 * radiant.from.radius * Math.cos(radiant.from.angle)).toString,
-                svgAttrs.y1 := (50.0 + 45 * radiant.from.radius * Math.sin(radiant.from.angle)).toString,
-                svgAttrs.x2 := (50.0 + 45 * radiant.to.radius * Math.cos(radiant.from.angle)).toString,
-                svgAttrs.y2 := (50.0 + 45 * radiant.to.radius * Math.sin(radiant.from.angle)).toString,
-                svgAttrs.stroke := "rgb(0, 0, 0)",
-                svgAttrs.strokeWidth := "0.5"
-              )
             }
-          }*/
           )
         }
       ).render
